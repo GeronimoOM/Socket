@@ -14,8 +14,7 @@ trait Server extends Input with Output {
   def run() { tryWith(server) { server => {
     while (true) {
       tryWith(server.accept()) { client =>
-        tryWith(input(client.getInputStream()),
-                output(client.getOutputStream())) { (in, out) =>
+        tryWith(output(client.getOutputStream()), input(client.getInputStream())) { (out, in) =>
           work(in, out)
         }
       }
