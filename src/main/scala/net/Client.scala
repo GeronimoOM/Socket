@@ -4,13 +4,14 @@ import java.net.Socket
 
 import utils.TryWith._
 
-trait Client extends Input with Output {
-  val host: String
-  val port: Int
+trait Client {
+  def run()
+}
+
+abstract class AbstractClient(val host: String, val port: Int) extends Client
+  with Input with Output {
 
   val socket: Socket = new Socket(host, port)
-
-  def work(in: In, out: Out): Unit
 
   def run() {
     tryWith(socket, input(socket.getInputStream()),
@@ -19,5 +20,6 @@ trait Client extends Input with Output {
     }}
   }
 
+  protected def work(in: In, out: Out)
 }
 

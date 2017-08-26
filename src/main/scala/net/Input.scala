@@ -14,5 +14,5 @@ trait DefaultInput extends Input {
 
 trait ObjectInput extends Input {
   type In = ObjectInputStream
-  override def input: (InputStream) => In = is => new ObjectInputStream(is)
+  override def input: (InputStream) => In = new ObjectInputStream(_)
 }

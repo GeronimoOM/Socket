@@ -14,6 +14,6 @@ trait DefaultOutput extends Output {
 
 trait ObjectOutput extends Output {
   type Out = ObjectOutputStream
-  override def output: (OutputStream) => ObjectOutputStream = os => new ObjectOutputStream(os)
+  override def output: (OutputStream) => ObjectOutputStream = new ObjectOutputStream(_)
 }
 

@@ -1,6 +1,6 @@
 package main
 
-import net.net.impl.TestServer
+import net.impl.TestServer
 
 object ServerMain {
 
