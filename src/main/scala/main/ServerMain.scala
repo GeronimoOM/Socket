@@ -1,11 +1,11 @@
 package main
 
-import net.impl.TestServer
+import game.TicTacToeServer
 
 object ServerMain {
 
   def main(args: Array[String]): Unit = {
-    val server = new TestServer(9999)
+    val server = new TicTacToeServer(9999)
     server.run()
   }
 

@@ -1,6 +1,6 @@
 package main
 
-import net.impl.TestClient
+import game.TicTacToeClient
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
@@ -9,13 +9,12 @@ object ClientMain {
   import ExecutionContext.Implicits.global
 
   def main(args: Array[String]) {
-    val clients = List("no rest", "for the", "wicked").map { msg =>
-      new TestClient(null, 9999, msg)
-    }
+    val clients = for (_ <- 0 until 2) yield
+      new TicTacToeClient(null, 9999)
 
     Await.ready(Future.sequence { clients.map {
       client => Future { client.run() }
-    }}, 5 seconds)
+    }}, Duration.Inf)
 
   }
 }

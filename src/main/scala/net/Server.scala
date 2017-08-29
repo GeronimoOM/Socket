@@ -27,22 +27,21 @@ abstract class AbstractServer(val port: Int) extends Server
     isShutdown = true
   }
 
-  protected def process(client: Socket) {
-    tryWith(client) { client => {
-      tryWith(output(client.getOutputStream()), input(client.getInputStream())) {
-        (out, in) => work(in, out)
-      }
+  protected def process(socket: Socket) {
+    tryWith(socket) { socket => {
+      tryWith(output(socket.getOutputStream()), input(socket.getInputStream())) { (out, in) => {
+        work(in, out, socket)
+      }}
     }}
   }
 
-  protected def work(in: In, out: Out)
+  protected def work(in: In, out: Out, client: Socket)
 }
 
-abstract class AbstractAsyncServer(override val port: Int) extends AbstractServer(port) {
+trait AsyncProcessing extends AbstractServer {
   import ExecutionContext.Implicits.global
 
   override protected def process(client: Socket) { Future {
-      super.process(client)
+    super.process(client)
   }}
-
 }
